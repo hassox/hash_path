@@ -13,7 +13,7 @@ module HashPath
     current_value = self
 
     path_keys.each do |key|
-      return nil unless ::Hash === current_value
+      return nil unless current_value.repsond_to?(:[])
       current_value = current_value[key]
     end
     current_value
@@ -33,7 +33,7 @@ module HashPath
     the_keys, current_value = [], self
 
     path_keys.each do |key|
-      raise(PathNotFound, the_keys.join(DELIMITER))unless ::Hash === current_value
+      raise(PathNotFound, the_keys.join(DELIMITER)) unless current_value.respond_to?(:[])
       the_keys << key
       current_value = current_value[key]
     end
@@ -47,7 +47,7 @@ module HashPath
       path
     when String, Symbol
       path.to_s.split(DELIMITER)
-    end.map{|key| key =~ /^\d$/ ? key.to_i : key }
+    end.map{|key| key =~ /^\d+$/ ? key.to_i : key }
   end
 end
 
