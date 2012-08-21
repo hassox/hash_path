@@ -22,10 +22,11 @@ module HashPath
   # Same as at_path but raises when a path is not found
   # The raise will give a delimited path of where the path went dead
   # @example
-  #   f = { 'foo' => {'bar' => {'baz' => 'hai'} } }
+  #   f = { 'foo' => {'bar' => {'baz' => 'hai'}, "baz" => [1,2] } }
   #   f.at_path!('foo.not.baz') # Raises, message == 'foo.not'
   #   f.at_path!('not.here.yo') # Raises, message == 'not'
   #   f.at_path!('foo.bar.not') # Raises, message == 'foo.bar.not'
+  #   f.at_path!("baz.1") # => 2
   # @see HashPath#at_path
   def at_path!(path)
     path_keys = normalize_path(path)
@@ -46,7 +47,7 @@ module HashPath
       path
     when String, Symbol
       path.to_s.split(DELIMITER)
-    end
+    end.map{|key| key =~ /^\d$/ ? key.to_i : key }
   end
 end
 
