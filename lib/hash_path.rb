@@ -13,7 +13,7 @@ module HashPath
     current_value = self
 
     path_keys.each do |key|
-      return nil unless current_value.repsond_to?(:[])
+      return nil unless current_value.respond_to?(:[])
       current_value = current_value[key]
     end
     current_value
