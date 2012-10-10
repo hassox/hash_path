@@ -40,6 +40,25 @@ module HashPath
     current_value
   end
 
+  # Provides flattened hash key paths
+  def flatten_key_paths(hash_or_obj=self, prefix=nil)
+    case hash_or_obj
+    when Hash
+      hash_or_obj.inject({}) do |h, (k,v)|
+        full_prefix = [prefix, k].compact.join(".")
+        result = flatten_key_paths(v, full_prefix)
+        if Hash === result
+          h.merge! result
+        else
+          h[full_prefix] = result
+        end
+        h
+      end
+    else
+      hash_or_obj
+    end
+  end
+
   private
   def normalize_path(path)
     case path
