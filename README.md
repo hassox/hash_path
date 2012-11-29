@@ -2,14 +2,14 @@
 
 Provides a simple interface to access hash paths.
 
-The gem was written to help with specs so use in production code will have an
-unkonwn performance hit.
+The gem was written to help with specs, so use in production code will have an
+unknown performance hit.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'path_spec'
+    gem 'hash_path'
 
 And then execute:
 
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install path_spec
+    $ gem install hash_path
 
 ## Usage
 
@@ -38,7 +38,7 @@ Given the hash
     # Or the raise version
     my_hash.at_path!("foo.bar.baz")   #=> 'hai'
     my_hash.at_path!("foo.bar.barry") #=> raises
-    my_hash.at_path("not_a_key")      #=> raises
+    my_hash.at_path!("not_a_key")     #=> raises
 
 
 ## Contributing
