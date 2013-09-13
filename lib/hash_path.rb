@@ -22,15 +22,20 @@ module HashPath
   #   f.at_path!("baz.1") # => 2
   # @see HashPath#at_path
   def at_path!(path)
-    path_keys = normalize_path(path)
-    the_keys, current_value = [], self
+    the_keys = []
 
-    path_keys.each do |key|
-      raise(PathNotFound, the_keys.join(DELIMITER)) unless current_value.respond_to?(:[])
+    normalize_path(path).reduce(self) do |memo, key|
       the_keys << key
-      current_value = current_value[key]
+      case key
+      when String
+        memo.key?(key) ? memo.fetch(key) : memo.fetch(key.to_sym)
+      else
+        memo.fetch(key)
+      end
     end
-    current_value
+
+  rescue => e
+    raise(PathNotFound, the_keys.join(DELIMITER))
   end
 
   # Provides flattened hash key paths
@@ -38,10 +43,11 @@ module HashPath
     case hash_or_obj
     when Hash
       hash_or_obj.inject({}) do |h, (k,v)|
-        full_prefix = [prefix, k].compact.join(".")
+        full_prefix = [prefix, k].compact.join(DELIMITER)
         result = flatten_key_paths(v, full_prefix)
-        if Hash === result
-          h.merge! result
+        case result
+        when Hash
+          h.merge!(result)
         else
           h[full_prefix] = result
         end
@@ -53,13 +59,14 @@ module HashPath
   end
 
   private
+
   def normalize_path(path)
     case path
     when Array
       path
     when String, Symbol
       path.to_s.split(DELIMITER)
-    end.map{|key| key =~ /^\d+$/ ? key.to_i : key }
+    end.map{|key| key =~ /\A\d+\z/ ? key.to_i : key }
   end
 end
 
