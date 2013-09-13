@@ -9,14 +9,7 @@ module HashPath
   # @example
   #   my_hash.at_path("foo.bar.baz") # looks in my_hash['foo']['bar']['baz']
   def at_path(path)
-    path_keys = normalize_path(path)
-    current_value = self
-
-    path_keys.each do |key|
-      return nil unless current_value.respond_to?(:[])
-      current_value = current_value[key]
-    end
-    current_value
+    at_path!(path) rescue nil
   end
 
   # Same as at_path but raises when a path is not found
