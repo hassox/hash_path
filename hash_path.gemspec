@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "hash_path"
   gem.require_paths = ["lib"]
   gem.version       = HashPath::VERSION
+  gem.add_development_dependency 'rspec', '~> 3.1'
+  gem.add_development_dependency 'pry'
 end
