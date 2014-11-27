@@ -15,7 +15,7 @@ module HashPath
   # Same as at_path but raises when a path is not found
   # The raise will give a delimited path of where the path went dead
   # @example
-  #   f = { 'foo' => {'bar' => {'baz' => 'hai'}, "baz" => [1,2] } }
+  #   f = { 'foo' => {'bar' => {'baz' => 'hai'} }, "baz" => [1,2] }
   #   f.at_path!('foo.not.baz') # Raises, message == 'foo.not'
   #   f.at_path!('not.here.yo') # Raises, message == 'not'
   #   f.at_path!('foo.bar.not') # Raises, message == 'foo.bar.not'
