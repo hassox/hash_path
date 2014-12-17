@@ -3,7 +3,7 @@
 ## 0.5.0
 ### 2014-12-17
 
-- Nil now responds to hashpath methods to prevent try's everywhere
+- Nil now responds to hashpath methods to prevent trys everywhere
 
 ## 0.4.0
 ### 2014-11-25
