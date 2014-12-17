@@ -9,9 +9,19 @@ RSpec.describe HashPath do
     it 'returns a value if it is found' do
       expect({foo: {bar: 5}}.at_path('foo.bar')).to eq(5)
     end
+
+    it 'returns nil if the starting object is nil' do
+      expect(nil.at_path('foo')).to eq(nil)
+    end
   end
 
   describe '#at_path!' do
+    it 'raises when nil' do
+      expect {
+        nil.at_path!('foo')
+      }.to raise_error(HashPath::PathNotFound)
+    end
+
     it 'looks up a key given by a string' do
       expect({'foo' => 5}.at_path!('foo')).to eq(5)
     end
@@ -76,6 +86,10 @@ RSpec.describe HashPath do
   describe '#flatten_key_paths' do
     it 'un-nests hashes' do
       expect({a: 5, b: {c: 7}}.flatten_key_paths).to eq({'a' => 5, 'b.c' => 7})
+    end
+
+    it 'returns an empty hash for nil' do
+      expect(nil.flatten_key_paths).to eq({})
     end
   end
 

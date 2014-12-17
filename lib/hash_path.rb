@@ -2,6 +2,22 @@ require "hash_path/version"
 module HashPath
   class PathNotFound < StandardError; end
 
+  module NilPath
+    def at_path(path)
+      nil
+    end
+
+    def at_path!(path)
+      raise PathNotFound, path
+    end
+
+    def flatten_key_paths(*)
+      {}
+    end
+  end
+
+
+
   DELIMITER = '.'
 
   # Looks up the path provided
@@ -70,6 +86,11 @@ module HashPath
   end
 end
 
+
 class Hash
   include HashPath
+end
+
+class NilClass
+  include HashPath::NilPath
 end
