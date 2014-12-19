@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["dneighman@squareup.com"]
   gem.description   = %q{Easy path navigation for hashes}
   gem.summary       = %q{Easy path navigation for hashes. Useful in specs}
-  gem.homepage      = ""
+  gem.homepage      = 'https://github.com/hassox/hash_path'
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
